@@ -1,5 +1,5 @@
 <?php
-namespace execut\converterBehavior;
+namespace execut\attributesConverter;
 
 /**
  * Inherited Methods
