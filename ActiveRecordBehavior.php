@@ -11,7 +11,7 @@ use yii\db\Expression;
  * Date: 8/22/14
  * Time: 2:13 PM
  */
-class ActiveRecordBehavior extends AttributesByEventsConverter {
+class ActiveRecordBehavior extends ByEventsBehavior {
     public $eventsPacks = [
         'from' => [
             BaseActiveRecord::EVENT_AFTER_INSERT,
