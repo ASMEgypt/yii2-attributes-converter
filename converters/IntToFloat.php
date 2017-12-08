@@ -8,9 +8,9 @@
 
 namespace execut\attributesConverter\converters;
 
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class IntToFloat extends Object implements Converter {
+class IntToFloat extends BaseObject implements Converter {
     public $decimals = 2;
     public function convert($value) {
         $value = str_replace(',', '.', $value);

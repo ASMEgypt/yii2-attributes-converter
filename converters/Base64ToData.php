@@ -1,9 +1,9 @@
 <?php
 namespace execut\attributesConverter\converters;
 
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class Base64ToData extends Object implements Converter {
+class Base64ToData extends BaseObject implements Converter {
     public function convert($data) {
         return base64_decode($data);
     }

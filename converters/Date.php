@@ -1,9 +1,9 @@
 <?php
 namespace execut\attributesConverter\converters;
 use DateTime;
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class Date extends Object implements Converter {
+class Date extends BaseObject implements Converter {
     public $from = null;
     public $to = null;
 

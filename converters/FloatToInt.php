@@ -8,9 +8,9 @@
 
 namespace execut\attributesConverter\converters;
 
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class FloatToInt extends Object implements Converter {
+class FloatToInt extends BaseObject implements Converter {
     public $decimals = 2;
     public function convert($value) {
         return round($value * pow(10, $this->decimals));
