@@ -14,6 +14,6 @@ class IntToFloat extends BaseObject implements Converter {
     public $decimals = 2;
     public function convert($value) {
         $value = str_replace(',', '.', $value);
-        return $value / pow(10, $this->decimals);
+        return (float) ($value / pow(10, $this->decimals));
     }
 }

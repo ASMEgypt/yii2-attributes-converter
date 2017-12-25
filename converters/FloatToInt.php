@@ -13,6 +13,6 @@ use yii\base\BaseObject;
 class FloatToInt extends BaseObject implements Converter {
     public $decimals = 2;
     public function convert($value) {
-        return round($value * pow(10, $this->decimals));
+        return (int) round($value * pow(10, $this->decimals));
     }
 } 

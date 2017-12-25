@@ -19,9 +19,34 @@ class ActiveRecordBehavior extends ByEventsBehavior {
             BaseActiveRecord::EVENT_AFTER_FIND,
         ],
         'to' => [
-
             BaseActiveRecord::EVENT_BEFORE_INSERT,
             BaseActiveRecord::EVENT_BEFORE_UPDATE,
         ]
     ];
+
+    protected function _convertFromEvent($event) {
+        if (!empty($this->converters)) {
+            $owner = $this->owner;
+            foreach ($this->converters as $params) {
+                $events = $params[0];
+                if ((in_array($event->name, $events) || $this->_inEventsPacks($event->name, $events)) && (!isset($params[3]) || in_array($this->owner->scenario, $params[3]))) {
+                    $attributes = $params[1];
+                    $converters = $params[2];
+                    foreach ($attributes as $attribute) {
+                        if (!is_array($converters)) {
+                            $converters = [$converters];
+                        }
+
+                        foreach ($converters as $converter) {
+                            $value = $owner->$attribute;
+                            $owner->$attribute = $this->_convert($converter, $value);
+                            if (in_array($event->name, $this->eventsPacks['from'])) {
+                                $owner->setOldAttribute($attribute, $owner->$attribute);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
