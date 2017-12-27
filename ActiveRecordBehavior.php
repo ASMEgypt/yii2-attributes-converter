@@ -2,6 +2,7 @@
 namespace execut\attributesConverter;
 use yii\base\Behavior;
 use yii\behaviors\AttributeBehavior;
+use yii\db\ActiveRecord;
 use yii\db\BaseActiveRecord;
 use yii\db\Expression;
 
@@ -41,7 +42,9 @@ class ActiveRecordBehavior extends ByEventsBehavior {
                             $value = $owner->$attribute;
                             $owner->$attribute = $this->_convert($converter, $value);
                             if (in_array($event->name, $this->eventsPacks['from'])) {
-                                $owner->setOldAttribute($attribute, $owner->$attribute);
+                                if ($owner instanceof ActiveRecord && $owner->hasAttribute($attribute)) {
+                                    $owner->setOldAttribute($attribute, $owner->$attribute);
+                                }
                             }
                         }
                     }
