@@ -40,7 +40,16 @@ class ActiveRecordBehavior extends ByEventsBehavior {
 
                         foreach ($converters as $converter) {
                             $value = $owner->$attribute;
-                            $owner->$attribute = $this->_convert($converter, $value);
+                            if (in_array($event->name, $this->eventsPacks['to'])) {
+                                if (!($owner instanceof ActiveRecord) || ($owner->isNewRecord || $owner->isAttributeChanged($attribute))) {
+                                    $oldAttribute = $owner->getOldAttribute($attribute);
+                                    $owner->$attribute = $this->_convert($converter, $value);
+                                    $owner->setOldAttribute($attribute, $oldAttribute);
+                                }
+                            } else {
+                                $owner->$attribute = $this->_convert($converter, $value);
+                            }
+
                             if (in_array($event->name, $this->eventsPacks['from'])) {
                                 if ($owner instanceof ActiveRecord && $owner->hasAttribute($attribute)) {
                                     $owner->setOldAttribute($attribute, $owner->$attribute);
